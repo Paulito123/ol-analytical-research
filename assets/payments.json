@@ -1,0 +1,39 @@
+[
+    {
+      "ol-account": "5F8AC83A9B3BF2EFF20A6C16CD05C111",
+      "transaction_version": "70167699",
+      "breakdown": [
+        {
+          "mission-id": "https://airtable.com/appuiDshjiBzOAGl2/tblixhNzkEaKt3a75/viwlz7S2kmgCkoHFS/recXtnhbiUpaBMKQx",
+          "reward": "40000000000",
+          "description": "free description",
+          "type": "work-related-payment"
+        },
+        {
+          "mission-id": "unique ref to task id",
+          "reward": "40000000000",
+          "description": "free description",
+          "type": "work-related-payment"
+        },
+        {
+          "mission-id": "unique ref to bonus",
+          "reward": "20000000000",
+          "description": "free description",
+          "type": "bonus"
+        }
+      ],
+      "block": "12121212",
+      "total-reward": "100000000000"
+    },
+    {
+      "mission-id": "https://airtable.com/appuiDshjiBzOAGl2/tblixhNzkEaKt3a75/viwlz7S2kmgCkoHFS/recXtnhbiUpaBMKQx",
+      "mission-description": "API for Permission Tree db",
+      "mission-resolve-share": 1,
+      "contributor": "5F8AC83A9B3BF2EFF20A6C16CD05C111",
+      "role": "Developer",
+      "block": "12121212",
+      "reward": "40000000000",
+      "type": "work-related-payment"
+    }
+  ]
+  

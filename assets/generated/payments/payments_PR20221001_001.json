@@ -1,0 +1,81 @@
+[
+    {
+        "artifacts": [
+            "https://github.com/paulito123/ol-analytical-research"
+        ],
+        "contributor": "5F8AC83A9B3BF2EFF20A6C16CD05C111",
+        "contributor_role": "broker",
+        "description": "Coordinating the project, developing 50%",
+        "workgroup_id": "analytics-wg",
+        "assignment_ref": "https://airtable.com/appuiDshjiBzOAGl2/tblixhNzkEaKt3a75/viw77ncDURPkx2Mln/rec4D7I4k2KS4ytt5?blocks=hide",
+        "payment_type": "work-related",
+        "reviewer": "5F8AC83A9B3BF2EFF20A6C16CD05C111",
+        "tx": {
+            "data": {
+                "amount": {
+                    "amount": 500000000,
+                    "currency": "GAS"
+                },
+                "metadata": "6163636f756e742067656e65726174696f6e",
+                "receiver": "5f8ac83a9b3bf2eff20a6c16cd05c111",
+                "sender": "0cb4fef910b686e5ae39049fb892cb24",
+                "type": "receivedpayment"
+            },
+            "key": "00000000000000005f8ac83a9b3bf2eff20a6c16cd05c111",
+            "sequence_number": 0,
+            "transaction_version": 70167699
+        }
+    },
+    {
+        "artifacts": [
+            "https://github.com/0L-Analytics/ol-analytical-research"
+        ],
+        "contributor": "5DB97DD068263449C8EB369DC2312AFA",
+        "contributor_role": "developer",
+        "description": "This is another dummy",
+        "workgroup_id": "analytics-wg",
+        "assignment_ref": "https://airtable.com/appuiDshjiBzOAGl2/tblixhNzkEaKt3a75/viw77ncDURPkx2Mln/recrJJkEMRt5aCYGT?blocks=hide",
+        "payment_type": "work-related",
+        "reviewer": "5F8AC83A9B3BF2EFF20A6C16CD05C111",
+        "tx": {
+            "data": {
+                "amount": {
+                    "amount": 137853170,
+                    "currency": "GAS"
+                },
+                "metadata": "66756c6c6e6f64655f73756273696479",
+                "receiver": "5db97dd068263449c8eb369dc2312afa",
+                "sender": "00000000000000000000000000000000",
+                "type": "receivedpayment"
+            },
+            "key": "00000000000000005db97dd068263449c8eb369dc2312afa",
+            "sequence_number": 104,
+            "transaction_version": 70340591
+        }
+    },
+    {
+        "artifacts": [],
+        "contributor": "E8DF1AFD258A10BD0392E1A8D274CC81",
+        "contributor_role": "",
+        "description": "reviewing work done",
+        "workgroup_id": "analytics-wg",
+        "assignment_ref": "https://airtable.com/appuiDshjiBzOAGl2/tblixhNzkEaKt3a75/viw77ncDURPkx2Mln/recrJJkEMRt5aCYGT?blocks=hide",
+        "payment_type": "review",
+        "reviewer": "None",
+        "tx": {
+            "data": {
+                "amount": {
+                    "amount": 137853170,
+                    "currency": "GAS"
+                },
+                "metadata": "66756c6c6e6f64655f73756273696479",
+                "receiver": "e8df1afd258a10bd0392e1a8d274cc81",
+                "sender": "00000000000000000000000000000000",
+                "type": "receivedpayment"
+            },
+            "key": "0000000000000000e8df1afd258a10bd0392e1a8d274cc81",
+            "sequence_number": 103,
+            "transaction_version": 70340591
+        }
+    }
+]

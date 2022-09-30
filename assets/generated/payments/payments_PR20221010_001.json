@@ -1,0 +1,56 @@
+[
+    {
+        "artifacts": [
+            "http://Link.to.docs.produced"
+        ],
+        "contributor": "5DB97DD068263449C8EB369DC2312AFA",
+        "contributor_role": "default-community-member",
+        "description": "documentation produced",
+        "workgroup_id": "hustle-karma-wg",
+        "assignment_ref": "http://Link.to.airtable",
+        "payment_type": "work-related",
+        "reviewer": "E8DF1AFD258A10BD0392E1A8D274CC81",
+        "tx": {
+            "data": {
+                "amount": {
+                    "amount": 126763455,
+                    "currency": "GAS"
+                },
+                "metadata": "66756c6c6e6f64655f73756273696479",
+                "receiver": "5db97dd068263449c8eb369dc2312afa",
+                "sender": "00000000000000000000000000000000",
+                "type": "receivedpayment"
+            },
+            "key": "00000000000000005db97dd068263449c8eb369dc2312afa",
+            "sequence_number": 105,
+            "transaction_version": 70550900
+        }
+    },
+    {
+        "artifacts": [
+            "http://link.to.testresults.on.github"
+        ],
+        "contributor": "E8DF1AFD258A10BD0392E1A8D274CC81",
+        "contributor_role": "tester",
+        "description": "testing of API",
+        "workgroup_id": "analytics-wg",
+        "assignment_ref": "http://Link.to.airtable",
+        "payment_type": "work-related",
+        "reviewer": "5DB97DD068263449C8EB369DC2312AFA",
+        "tx": {
+            "data": {
+                "amount": {
+                    "amount": 126763455,
+                    "currency": "GAS"
+                },
+                "metadata": "66756c6c6e6f64655f73756273696479",
+                "receiver": "e8df1afd258a10bd0392e1a8d274cc81",
+                "sender": "00000000000000000000000000000000",
+                "type": "receivedpayment"
+            },
+            "key": "0000000000000000e8df1afd258a10bd0392e1a8d274cc81",
+            "sequence_number": 104,
+            "transaction_version": 70550900
+        }
+    }
+]
