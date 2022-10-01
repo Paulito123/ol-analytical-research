@@ -1,5 +1,6 @@
 [
     {
+        "payment-round": "PR20221010_001",
         "artifacts": [
             "http://Link.to.docs.produced"
         ],
@@ -27,6 +28,7 @@
         }
     },
     {
+        "payment-round": "PR20221010_001",
         "artifacts": [
             "http://link.to.testresults.on.github"
         ],

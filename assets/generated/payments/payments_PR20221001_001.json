@@ -1,5 +1,6 @@
 [
     {
+        "payment-round": "PR20221001_001",
         "artifacts": [
             "https://github.com/paulito123/ol-analytical-research"
         ],
@@ -27,6 +28,7 @@
         }
     },
     {
+        "payment-round": "PR20221001_001",
         "artifacts": [
             "https://github.com/0L-Analytics/ol-analytical-research"
         ],
@@ -54,6 +56,7 @@
         }
     },
     {
+        "payment-round": "PR20221001_001",
         "artifacts": [],
         "contributor": "E8DF1AFD258A10BD0392E1A8D274CC81",
         "contributor_role": "",

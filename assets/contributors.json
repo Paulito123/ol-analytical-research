@@ -1,65 +1,63 @@
-[
-    {
-      "account": "5F8AC83A9B3BF2EFF20A6C16CD05C111",
-      "identities": [
-        {
-          "context": "Discord",
-          "id": "776520842070720514",
-          "username": "Paulito#0564"
-        },
-        {
-          "context": "Github",
-          "id": "paulito123",
-          "username": "Paulito"
-        }
-      ],
-      "roles": [
-        {
-          "name": "broker",
-          "context": "analytics-wg"
-        }
-      ]
-    },
-    {
-      "account": "5DB97DD068263449C8EB369DC2312AFA",
-      "identities": [
-        {
-          "context": "Discord",
-          "id": "776520842070799999",
-          "username": "Paulito#9999"
-        },
-        {
-          "context": "Github",
-          "id": "paulito999",
-          "username": "Dummito"
-        }
-      ],
-      "roles": [
-        {
-          "name": "developer",
-          "context": "analytics-wg"
-        }
-      ]
-    },
-    {
-      "account": "E8DF1AFD258A10BD0392E1A8D274CC81",
-      "identities": [
-        {
-          "context": "Discord",
-          "id": "776520842070700000",
-          "username": "Paulito#0000"
-        },
-        {
-          "context": "Github",
-          "id": "paulito000",
-          "username": "Dummito2"
-        }
-      ],
-      "roles": [
-        {
-          "name": "developer",
-          "context": "hustle-karma-wg"
-        }
-      ]
-    }
-]
+
+{
+  "5F8AC83A9B3BF2EFF20A6C16CD05C111": {
+    "identities": [
+      {
+        "context": "Discord",
+        "id": "776520842070720514",
+        "username": "Paulito#0564"
+      },
+      {
+        "context": "Github",
+        "id": "paulito123",
+        "username": "Paulito"
+      }
+    ],
+    "roles": [
+      {
+        "name": "broker",
+        "context": "analytics-wg"
+      }
+    ]
+  },
+  "5DB97DD068263449C8EB369DC2312AFA": {
+    "identities": [
+      {
+        "context": "Discord",
+        "id": "776520842070799999",
+        "username": "Paulito#9999"
+      },
+      {
+        "context": "Github",
+        "id": "paulito999",
+        "username": "Dummito"
+      }
+    ],
+    "roles": [
+      {
+        "name": "developer",
+        "context": "analytics-wg"
+      }
+    ]
+  },
+  "E8DF1AFD258A10BD0392E1A8D274CC81": {
+    "identities": [
+      {
+        "context": "Discord",
+        "id": "776520842070700000",
+        "username": "Paulito#0000"
+      },
+      {
+        "context": "Github",
+        "id": "paulito000",
+        "username": "Dummito2"
+      }
+    ],
+    "roles": [
+      {
+        "name": "developer",
+        "context": "hustle-karma-wg"
+      }
+    ]
+  }
+}
