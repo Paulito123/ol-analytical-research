@@ -45,4 +45,17 @@ def validate_timestamp(timestamp_text: AnyStr) -> AnyStr:
 
 if __name__ == "__main__":
     # asyncio.run(main_async())
-    print(validate_timestamp('2022-11-21T20:25:59'))
+    # print(validate_timestamp('2022-11-21T20:25:59'))
+
+    # print(len(get_active_set_ips()))
+    # print(get_active_set_ips())
+
+    # sum
+    # 104402.10947614838
+    # count
+    # 1035366
+
+    # 1047395
+
+    print(f"")
+

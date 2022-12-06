@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+
+  db:
+    container_name: adhoc-db
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    ports:
+      - "6543:5432"
+    environment:
+      - POSTGRES_USER=ol_intel
+      - POSTGRES_PASSWORD=ol_intel
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
