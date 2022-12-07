@@ -40,7 +40,7 @@ def get_acc_balances() -> List:
         AccountBalance.account_type,
         label("balance", cast(AccountBalance.balance / 1000000, Integer)),
         AccountBalance.updated_at)\
-            .filter(AccountBalance.account_type=='miner', AccountBalance.wallet_type=='X')\
+            .filter(AccountBalance.wallet_type=='X')\
             .all()
     list_out = []
     for ab in qres:
