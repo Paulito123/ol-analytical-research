@@ -218,10 +218,8 @@ def regex_time_range(start_ts_string: AnyStr, end_ts_string: AnyStr):
 
         # (26:00)   27:00 > 29:59   (59:19) next_roll = 540 | seconds_discounter = 541
         # [0][1-9]\:[0-5][0-9]
-        # if _m[0] == 9:
-        #     str_out = f"{str_out}|{ds}[{_H[0]}][{_h[0]}]\:[{_M[0]+1}][0]\:[0-5][0-9].*"
-        # else:
-        str_out = f"{str_out}|{ds}[{_H[0]}][{_h[0]}]\:[{_M[0]}][{(_m[0]+1)}{'' if (_m[0]+1)==9 else '-9'}]\:[0-5][0-9].*"
+        ############################# NEW ############################# 2022-01-01T01:43:00 > 2022-01-01T02:01:19
+        str_out = f"{str_out}|{ds}[{_H[0]}][{_h[0]}]\:[{_M[0]}][{_m[0]+1}{'' if (_m[0]+1)==9 else '-9'}]\:[0-5][0-9].*"
         print_range(str_out, start_ts_string, end_ts_string, tag=20, message="PARTIAL")
         
         
@@ -255,47 +253,23 @@ def regex_time_range(start_ts_string: AnyStr, end_ts_string: AnyStr):
             print_range(str_out, start_ts_string, end_ts_string, tag=23, message="FINAL")
             return str_out
         elif seconds_discounter < 600:
-            # (01:45)   10:00 > 11:00   next_roll=3000 | seconds_discounter=60
-            # [1][0]:[0-5][0-9] | [1][1]:[0][0]
-            # (01:45)   10:00 > 11:01   next_roll=3000 | seconds_discounter=61
-            # [1][0]:[0-5][0-9] | [1][1]:[0][0-1]
+            ############################# NEW ############################## 2022-01-01T01:43:00 > 2022-01-01T01:59:59
+            if _M[1] - (_M[0]+1) == 1:
+                # 01:33:00 > 01:59:58   [4][0-9][0-5][0-9]
+                str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]-1}][0-9]\:[0-5][0-9].*"
+            elif _M[1] - (_M[0]+1) > 1:
+                # 01:23:00 > 01:59:58 > 
+                str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[0]+1}-{_M[1]-1}][0-9]\:[0-5][0-9].*"
+            
+            if _m[1] >= 1:
+                str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{f'0-{_m[1]-1}' if _m[1]>1 else '0'}]\:[0-5][0-9].*"
 
-            # (01:45)   10:00 > 11:15   next_roll=3000 | seconds_discounter=75
-            # [1][0]:[0-5][0-9] | [1][1]:[0][0-9] | [1][1]:[1][0-5]
-            # (01:45)   10:00 > 11:31   next_roll=3000 | seconds_discounter=91
-            # [1][0]:[0-5][0-9] | [1][1]:[0-2][0-9] | [1][1]:[3][0-1]
-
-            # (01:45)   10:00 > 12:00   next_roll=3000 | seconds_discounter=120
-            # [1][0-1]:[0-5][0-9] | [1][2]:[0][0]
-
-            # (01:45)   10:00 > 12:01   next_roll=3000 | seconds_discounter=121
-            # [1][0-1]:[0-5][0-9] | [1][2]:[0][0-1]
-            # (01:45)   10:00 > 12:11   next_roll=3000 | seconds_discounter=131
-            # [1][0-1]:[0-5][0-9] | [1][2]:[0][0-9] | [1][2]:[1][0-1]
-            # (01:45)   10:00 > 12:21   next_roll=3000 | seconds_discounter=141
-            # [1][0-1]:[0-5][0-9] | [1][2]:[0-1][0-9] | [1][2]:[2][0-1]
-
-            # (01:45)   10:00 > 19:21   next_roll=3000 | seconds_discounter=141
-            # [1][0-8]:[0-5][0-9] | [1][9]:[0-1][0-9] | [1][9]:[2][0-1]
-
-            # (01:45)   10:00 > 20:01   next_roll=3000 | seconds_discounter=141
-            # [1][0-8]:[0-5][0-9] | [1][9]:[0-1][0-9] | [1][9]:[2][0-1]
-
-            # (01:45)   10:00 > 21:38   next_roll=3000 | seconds_discounter=141
-            # [1][0-8]:[0-5][0-9] | [1][9]:[0-1][0-9] | [1][9]:[2][0-1]
-
-            str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{'0' if _m[1]==1 else f'0-{_m[1]-1}'}]\:[0-5][0-9].*"
-
-            if _S[1] == 0:
-                str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[0][{'' if _s[1]==0 else '0-'}{_s[1]}].*)"
-                print_range(str_out, start_ts_string, end_ts_string, tag=25, message="FINAL")
-                return str_out
-            else:
-                str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[{'0' if _S[1]==1 else f'0-{_S[1]-1}'}][0-9].*"
-
-            str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[{_S[1]}][{'' if _s[1]==0 else '0-'}{_s[1]}].*)"
-            print_range(str_out, start_ts_string, end_ts_string, tag=26, message="FINAL")
-            return str_out
+            if _S[1] >= 1:
+                str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[{f'0-{_S[1]-1}' if _S[1]>1 else '0'}][0-9].*"
+            
+            str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[{_S[1]}][{'0' if _s[1]==0 else f'0-{_s[1]}'}].*)"
+            print_range(str_out, start_ts_string, end_ts_string, tag=25, message="FINAL")
+            return str_out 
         else:
             # (26:00)   30:00 > 50:00   (59:19) next_roll = 540 | seconds_discounter = 541
             # [3-4][0-5]\:[0-5][0-9] | [5][0-8]:[0-5][0-9] | [5][9]:[0][0-9] | [5][9]:[1][0-9]
@@ -313,8 +287,12 @@ def regex_time_range(start_ts_string: AnyStr, end_ts_string: AnyStr):
                 str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[{'0' if _S[1]<=1 else f'0-{_S[1]-1}'}][0-9].*"
 
             str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[{_S[1]}][{'0' if _s[1]==0 else f'0-{_s[1]}'}].*)"
-            print_range(str_out, start_ts_string, end_ts_string, tag=27, message="FINAL")
+            print_range(str_out, start_ts_string, end_ts_string, tag=26, message="FINAL")
             return str_out
+    else: # next_roll < seconds_discounter:
+        str_out = f"{str_out}|{ds}[{_H[0]}][{_h[0]}]\:[{_M[0]+1}][0-9]\:[0-5][0-9].*"
+        print_range(str_out, start_ts_string, end_ts_string, tag=27, message="PARTIAL")
+
 
     seconds_discounter -= next_roll
     # when will the hour1 roll over to hour2?
@@ -338,7 +316,7 @@ def regex_time_range(start_ts_string: AnyStr, end_ts_string: AnyStr):
         elif seconds_discounter < 60:
             # (01:01:45)   02:00:00 > 02:00:01   next_roll=3000 | seconds_discounter=1
             # [0][2]:[0][0]:[0][0-1]
-            str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[{f'0-{_S[1]-1}' if _S[1]<=1 else '0'}][0-9].*"
+            str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[{'0' if _S[1]<=1 else f'0-{_S[1]-1}'}][0-9].*"
             str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[{_S[1]}][{'' if _s[1]==0 else '0-'}{_s[1]}].*)"
             print_range(str_out, start_ts_string, end_ts_string, tag=30, message="FINAL")
             return str_out
@@ -349,14 +327,32 @@ def regex_time_range(start_ts_string: AnyStr, end_ts_string: AnyStr):
 
             if _S[1] == 0:
                 str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[0][{'' if _s[1]==0 else '0-'}{_s[1]}].*)"
-                print_range(str_out, start_ts_string, end_ts_string, tag=25, message="FINAL")
+                print_range(str_out, start_ts_string, end_ts_string, tag=31, message="FINAL")
                 return str_out
             else:
                 str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[{'0' if _S[1]==1 else f'0-{_S[1]-1}'}][0-9].*"
 
             str_out = f"{str_out}|{ds}[{_H[1]}][{_h[1]}]\:[{_M[1]}][{_m[1]}]\:[{_S[1]}][{'' if _s[1]==0 else '0-'}{_s[1]}].*)"
-            print_range(str_out, start_ts_string, end_ts_string, tag=26, message="FINAL")
+            print_range(str_out, start_ts_string, end_ts_string, tag=32, message="FINAL")
             return str_out
+            
+            ############################# NEW ############################# 2022-01-01T01:43:00 > 2022-01-01T02:01:19
+            # [s] next_roll=10 & seconds_discounter=1099
+            # <3>[PARTIAL]=(2022-01-01T[0][1]\:[4][3]\:[0][0-9].*
+            # [S] next_roll=50 & seconds_discounter=1089
+            # <9>[PARTIAL]=(2022-01-01T[0][1]\:[4][3]\:[0][0-9].*|2022-01-01T[0][1]\:[4][3]\:[1-5][0-9].*
+            # [m] next_roll=360 & seconds_discounter=1039
+            # <20>[PARTIAL]=(2022-01-01T[0][1]\:[4][3]\:[0][0-9].*|2022-01-01T[0][1]\:[4][3]\:[1-5][0-9].*|2022-01-01T[0][1]\:[4][4-9]\:[0-5][0-9].*
+            # [M] next_roll=600 & seconds_discounter=679
+            # [M] next_roll=288000 & seconds_discounter=79
+            # (2022-01-01T[0][1]\:[4][3]\:[0][0-9].*|
+            # 2022-01-01T[0][1]\:[4][3]\:[1-5][0-9].*|
+            # 2022-01-01T[0][1]\:[4][4-9]\:[0-5][0-9].*| < Missing range [5][0-9]:[0-5][0-9]
+            # 2022-01-01T[0][2]\:[0][0]\:[0-5][0-9].*|
+            # 2022-01-01T[0][2]\:[0][1]\:[0][0-9].*|
+            # 2022-01-01T[0][2]\:[0][1]\:[1][0-9].*)
+
+
         elif seconds_discounter < 36000:
             # TODO: Continue here...
             # (01:45)   10:00 > 11:00   next_roll=3000 | seconds_discounter=60
@@ -416,42 +412,34 @@ def run_test(
 
 
 def main():
-    # 86400 = full day
-    seconds = 2000
-    # start date iterator
     break_flag = False
+    start_ts_str = "2022-01-01T01:00:00"
+    start_ts = datetime.strptime(start_ts_str, '%Y-%m-%dT%H:%M:%S')
+    end_ts_str = "2022-01-01T01:59:59"
+    end_ts = datetime.strptime(end_ts_str, '%Y-%m-%dT%H:%M:%S')
 
-    for j in range(0, 2):
-        start_ts_str = '2022-01-01T01:26:00'
-        loop_start_ts = datetime.strptime(start_ts_str, '%Y-%m-%dT%H:%M:%S')
-        loop_end_ts = loop_start_ts + timedelta(seconds=seconds)
-        for i in range(0, seconds):
-            if j == 0:
-                delta_a = i
-                delta_b = 0 
-            else:
-                delta_a = 0
-                delta_b = 1
-            
-            loop_start_ts = datetime.strptime(start_ts_str, '%Y-%m-%dT%H:%M:%S') + timedelta(seconds=delta_a)
-            loop_start_str = datetime.strftime(loop_start_ts, '%Y-%m-%dT%H:%M:%S')
-            loop_end_ts = loop_end_ts - timedelta(seconds=delta_b)
-            loop_end_str = datetime.strftime(loop_end_ts, '%Y-%m-%dT%H:%M:%S')
+    total_seconds = secs_between(start_ts_str, end_ts_str)
 
-            # print(f"j={j}, i={i}, {loop_start_str} > {loop_end_str}")
-            
-            regex = regex_time_range(loop_start_str, loop_end_str)
+    for i in range(0, total_seconds+1):
+        subj_start_ts = start_ts + timedelta(seconds=i)
+        subj_start_str = datetime.strftime(subj_start_ts, '%Y-%m-%dT%H:%M:%S')
+        for j in range(0, total_seconds-i):
+            subj_end_ts = end_ts - timedelta(seconds=j)
+            subj_end_str = datetime.strftime(subj_end_ts, '%Y-%m-%dT%H:%M:%S')
+
+            regex = regex_time_range(subj_start_str, subj_end_str)
             matches = run_test(regex)
-            expectation = secs_between(loop_start_str, loop_end_str) +1
+            expectation = secs_between(subj_start_str, subj_end_str) +1
             if len(matches) != expectation:
                 print("__________________________________________________ERROR__________________________________________________")
-                print(f"[Result does not match!] {loop_start_str} > {loop_end_str}")
+                print(f"[Result does not match!] {subj_start_str} > {subj_end_str}")
                 print(regex)
                 # print(f"matches={matches}")
+                break_flag = True
+                os.system("aplay -d 1 ./assets/sin.wav")
                 break
-            # print(f"i={i} & j={j} & matches={len(matches)} & expectation={expectation}")
-
-
+        if break_flag:
+            break
 
 if __name__ == "__main__":
     main()
