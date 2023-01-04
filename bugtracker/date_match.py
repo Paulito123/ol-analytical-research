@@ -491,5 +491,12 @@ def main():
             break
 
 if __name__ == "__main__":
-    main()
+    # main()
     # print(secs_between("2022-01-01T00:00:00", "2022-01-01T00:00:10"))
+    str1 = '2022-11-20T04:50:35.578897Z [network-Validator] ERROR network/src/peer_manager/mod.rs:1227 [validator,Validator,749ff1a8] Outbound connection failed for peer 9a710919 at /ip4/204.186.74.44/tcp/6180/ln-noise-ik/3c37c7d6a5122a6b9ef07a11cc40e445874eb0841ae028d6326bf67768cce235/ln-handshake/0: Transport error: noise client: error reading server handshake response message, server probably rejected our handshake message: unexpected end of file {"error":"Transport error: noise client: error reading server handshake response message, server probably rejected our handshake message: unexpected end of file","network_address":"/ip4/204.186.74.44/tcp/6180/ln-noise-ik/3c37c7d6a5122a6b9ef07a11cc40e445874eb0841ae028d6326bf67768cce235/ln-handshake/0","network_context":{"role":"validator","network_id":"Validator","peer_id":"749ff1a8b711605e5421cfd00bd3385f"},"remote_peer":"9A710919B1A1E67EDA335269C0085C91"}'
+    str2 = '2022-11-20T04:50:35.586822Z [network-Public] ERROR network/src/peer_manager/mod.rs:1227 [validator,Public,93079836] Outbound connection failed for peer 987d7486 at /ip4/52.15.236.78/tcp/6178/ln-noise-ik/ee5029ebc2c62cc0a07a9123a8f914773cf1b2ca80f80a47317b0ce1b2dd2b1a/ln-handshake/0: Transport error: noise client: error reading server handshake response message, server probably rejected our handshake message: unexpected end of file {"error":"Transport error: noise client: error reading server handshake response message, server probably rejected our handshake message: unexpected end of file","network_address":"/ip4/52.15.236.78/tcp/6178/ln-noise-ik/ee5029ebc2c62cc0a07a9123a8f914773cf1b2ca80f80a47317b0ce1b2dd2b1a/ln-handshake/0","network_context":{"role":"validator","network_id":"Public","peer_id":"930798363f9fb7f553acfd26f89fa05f"},"remote_peer":"987D7486A6DB70993EEAB79124BC6606"}'
+
+    # print(str1[28::])
+    bla = re.search("(\s[A-Z]+\s)", str1)
+    if bla:
+        print(bla[0])
