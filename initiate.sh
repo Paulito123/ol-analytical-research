@@ -14,6 +14,8 @@ cp -u $PYTHONPATH/assets/0L.toml ~/.0L
 
 # make the ol tool executable
 chmod +x $PYTHONPATH/bin/ol
+chmod +x $PYTHONPATH/bin/txs
+chmod +x $PYTHONPATH/bin/onboard
 
 # add the path of the ol tool to the PATH variable. 
 # This should be done every time you logout and login
