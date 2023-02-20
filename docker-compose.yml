@@ -5,7 +5,7 @@ services:
   db:
     container_name: adhoc-db
     build:
-      context: ./db
+      context: ./dataingest/db
       dockerfile: Dockerfile
     ports:
       - "5432:5432"
@@ -13,7 +13,25 @@ services:
       - POSTGRES_USER=ol_intel
       - POSTGRES_PASSWORD=ol_intel
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - "adhoc_data:/var/lib/postgresql/data/"
+  
+  tx:
+    container_name: adhoc-tx
+    build:
+      context: ./dataingest
+      dockerfile: Dockerfile
+    entrypoint: ['/usr/src/app/entrypoint.sh']
+    environment:
+      - DATABASE_URL=postgresql://ol_intel:ol_intel@db:5432/adhoc
+    volumes:
+      - './dataingest:/usr/src/app'
+    depends_on:
+      - db
 
 volumes:
-  postgres_data:
+  adhoc_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "~/adhoc_vol/"
