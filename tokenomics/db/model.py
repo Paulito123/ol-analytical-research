@@ -4,7 +4,7 @@ from sqlalchemy import Column, DateTime, Integer, String, func, Float, BigIntege
 from sqlalchemy.sql.expression import label, cast
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import JSONB
-from typing import List, AnyStr
+from typing import List, AnyStr, Dict
 from datetime import datetime
 
 from . import engine, session
@@ -71,6 +71,28 @@ class AccountBalance(Base):
                 if 'SlowWallet' in elem:
                     return 'S'
         return 'N'
+
+    def update_wallet_type(obj: Dict) -> None:
+        """
+        Update wallet type
+        """
+        ab = session\
+            .query(AccountBalance)\
+            .filter(AccountBalance.address == obj['address'])\
+            .first()
+        ab.wallet_type = obj['wallet_type']
+        session.commit()
+    
+    def update_unlocked(obj: Dict) -> None:
+        """
+        Update unlocked amount
+        """
+        ab = session\
+            .query(AccountBalance)\
+            .filter(AccountBalance.address == obj['address'])\
+            .first()
+        ab.unlocked = obj['unlocked']
+        session.commit()
 
     def lookup_unlocked(address: AnyStr) -> int:
         """

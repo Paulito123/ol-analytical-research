@@ -3,6 +3,7 @@ from typing import List, AnyStr, Any
 from datetime import datetime
 from aiohttp import ClientSession
 from jsonrpcclient import Ok, parse
+from json import dumps
 
 
 known_methods = {
@@ -20,6 +21,7 @@ known_methods = {
 }
 
 URL = "http://63.229.234.76:8080"
+# URL = 'http://63.229.234.77:8080'
 
 
 def make_RPC_call(url: AnyStr, method: AnyStr, params: List) -> Response:
@@ -64,11 +66,11 @@ async def make_RPC_call_async(url: AnyStr, method: AnyStr, params: List) -> Any:
 
 
 if __name__ == "__main__":
-    response = make_RPC_call(
-        URL, 
-        "get_account_transactions", 
-        ["2bfd96d8a674a360b733d16c65728d72", 0, 100, False]
-    )
+    # response = make_RPC_call(
+    #     URL, 
+    #     "get_account_transactions", 
+    #     ["00000000000000000000000000000000", 0, 10, False]
+    # )
 
     # response = make_RPC_call(
     #     URL, 
@@ -76,8 +78,29 @@ if __name__ == "__main__":
     #     ["2bfd96d8a674a360b733d16c65728d72"]
     # )
 
+    # response = make_RPC_call(
+    #     URL, 
+    #     "get_events", 
+    #     ["000000000000000000000000000000000000000000000000", 0, 10]
+    # )
+
+    #### /home/user/projects/ol-analytical-research/assets/generated/97622692_2.json
+
+    height = 97622693
+    blocks = 2
+    eventsIncluded = True
+
+    response = make_RPC_call(
+        URL, 
+        "get_transactions", 
+        [height, blocks, eventsIncluded]
+    )
+
     if response.status_code == 200:
         result = response.json()
-        print(f"Result: {result}")
+        with open(f"assets/generated/{height}_{p1}.json", "w") as outfile:
+            outfile.write(dumps(result))
+            print("Done!")
+        # print(f"Result: {result}")
     else:
         print(f"Request failed with status code: {response.status_code}")

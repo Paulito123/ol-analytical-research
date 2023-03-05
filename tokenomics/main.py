@@ -75,9 +75,9 @@ def how_liquid_are_we() -> None:
     # AccountBalance.lookup_wallets_unlocked(AccountBalance)
     # print("lookup wallet types slow / normal")
     # AccountBalance.lookup_wallet_types(AccountBalance)
-    # # # # print("calculate liquidity...")
-    # # # # ls = AccountBalance.get_liquid_supply()
-    # # # # print(f"We have a liquid supply of {ls[0]} / {ls[1]}")
+    # # # print("calculate liquidity...")
+    # # # ls = AccountBalance.get_liquid_supply()
+    # # # print(f"We have a liquid supply of {ls[0]} / {ls[1]}")
 
     print("done!")
 
@@ -93,46 +93,50 @@ def main():
     # with open(f"{Config.PYTHONPATH}/assets/generated/wallet_balances.json", "w") as outfile:
     #     outfile.write(json_object)
 
-def test_shit(url, counter, increase=10):
-    address = "2bfd96d8a674a360b733d16c65728d72"
-    # while keep_going:
-        # print(f"counter={counter}")
-    try:
-        response = make_RPC_call(
-            url, 
-            "get_account_transactions", 
-            [address, counter, increase, True]
-        )
+# def test_shit(url, counter, increase=10):
+#     # address = "2bfd96d8a674a360b733d16c65728d72"
+#     address = "7db562b2cc2c542ed65f2a2b94e0f2f8"
+#     address = "00000000000000000000000000000000"
+#     # while keep_going:
+#         # print(f"counter={counter}")
+#     try:
+#         response = make_RPC_call(
+#             url, 
+#             "get_account_transactions", 
+#             [address, counter, increase, True]
+#         )
 
-        if response.status_code == 200:
-            result = response.json()
-            # print(result)
-            if 'result' in result:
-                # print(f"[{datetime.now()}]:INFO:{len(result['result'])} results fetched")
-                # escape if result is empty
-                # if len(result["result"]) == 0:
-                #     print("Exiting...")
-                    # keep_going = False
-                    # continue
-                # ingest data
-                # AccountTransaction.upload_result(address, result["result"])
-                print(f'[{address}] on [{url}] = {len(result["result"])} records fetched.')
-                return url
-            else:
-                print(f"result={result}")
-        else:
-            print(f"Request failed with status code: {response.status_code}")
+#         if response.status_code == 200:
+#             result = response.json()
+#             # print(result)
+#             if 'result' in result:
+#                 # print(f"[{datetime.now()}]:INFO:{len(result['result'])} results fetched")
+#                 # escape if result is empty
+#                 # if len(result["result"]) == 0:
+#                 #     print("Exiting...")
+#                     # keep_going = False
+#                     # continue
+#                 # ingest data
+#                 # AccountTransaction.upload_result(address, result["result"])
+#                 print(f'[{address}] on [{url}] = {len(result["result"])} records fetched.')
+#                 return url
+#             else:
+#                 print(f"result={result}")
+#         else:
+#             print(f"Request failed with status code: {response.status_code}")
 
-    except HTTPError as h:
-        print(f"[{datetime.now()}]:HTTPERROR:{h}")
-    except Exception as e:
-        print(f"[{datetime.now()}]:ERROR:{e}")
+#     except HTTPError as h:
+#         print(f"[{datetime.now()}]:HTTPERROR:{h}")
+#     except Exception as e:
+#         print(f"[{datetime.now()}]:ERROR:{e}")
     
-    return None
+#     return None
 
 
 if __name__ == "__main__":
     how_liquid_are_we()
+
+    # test_shit()
 
     # with open('/home/user/projects/ol-analytical-research/assets/fullnode_seed_playlist.json', 'r') as f:
     #     data = load(f)

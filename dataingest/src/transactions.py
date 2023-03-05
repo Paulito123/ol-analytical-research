@@ -1,29 +1,35 @@
 from typing import List, Dict, Tuple, AnyStr, Any
 from datetime import datetime
-from db.model import session, AccountBalance, AccountTransaction
-from asyncio import create_task, sleep, get_event_loop, Queue, new_event_loop, set_event_loop
+from db.model import session, AccountBalance, AccountTransaction, engine, text
+from asyncio import create_task, sleep, Queue, new_event_loop, set_event_loop
 from aiohttp import ClientSession
 from jsonrpcclient import Ok, parse
 import random
 
-addr_list = session\
-    .query(AccountBalance.address)\
-    .all()
-addresses = [addr[0] for addr in addr_list]
+
+addresses = []
 nodes = ['http://63.229.234.76:8080', 'http://63.229.234.77:8080']
 
-print()
+# addr_list = session\
+#     .query(AccountBalance.address)\
+#     .all()
+# addresses = [addr[0] for addr in addr_list]
+
+with engine.connect() as con:
+    sql = text("SELECT distinct address from accountbalance where address not in (select address from accounttransaction)")
+    addr_list = con.execute(sql)
+    addresses = [addr[0] for addr in addr_list]
 
 
 async def get_transactions_for_address(node_url, address):
     max_error_count = 10
     lks = AccountTransaction.max_seq(address)
-    last_known_seq = lks if lks else 0
+    last_known_seq = lks + 1 if lks else 0
     print(f"last_known_seq={last_known_seq}")
 
     async with ClientSession() as session:
         counter = last_known_seq
-        increase = 200
+        increase = 1000
         errors = 0
         while True:
             params = [address, counter, increase, True]

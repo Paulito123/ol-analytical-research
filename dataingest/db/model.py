@@ -1,6 +1,6 @@
 import os
 import re
-from sqlalchemy import Column, DateTime, Integer, String, func, Float, BigInteger, or_, LargeBinary
+from sqlalchemy import Column, DateTime, Integer, String, func, Float, BigInteger, or_, LargeBinary, text
 from sqlalchemy.sql.expression import label, cast
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import JSONB

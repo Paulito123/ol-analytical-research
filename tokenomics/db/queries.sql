@@ -2,26 +2,33 @@ with base as (select account_type, sum(balance / 1000000) as balance, sum(unlock
 
 with base as (
     select 
+        account_type,
         wallet_type, 
         sum(balance/1000000) as balance, 
         sum(case 
-            when wallet_type = 'N' then balance/1000000 
-            when wallet_type = 'C' then 0
-            when wallet_type = 'X' then balance
+            when account_type = 'community' then 0
+            when wallet_type = 'N' then balance/1000000
             when unlocked <= (balance/1000000) then unlocked 
             else balance/1000000
-            end) as unlocked 
+            end) as unlocked
     from accountbalance 
     where (balance/1000000) > 0 
-    group by wallet_type
+    group by account_type, wallet_type
 ) 
 select 
+    account_type,
     wallet_type, 
     balance, 
     unlocked 
 from base 
 UNION 
-select 'TOTALS', sum(balance), sum(unlocked) from base order by 3
+select 'TOTALS', '=>', sum(balance), sum(unlocked) from base order by 3
+
+
+select account_type, sum(balance) as balance
+from accountbalance
+group by account_type
+order by 2
 
 select id, balance/1000000 as balance, unlocked
 from accountbalance
