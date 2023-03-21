@@ -40,8 +40,8 @@ async def process_addresses():
             tasks.append(task)
             if len(tasks) == Config.TASK_LIMIT:
                 done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+                print(f"finished={len(done)}")
                 for task in done:
-                    # print(f"done?={len(done)}")
                     result = task.result()
                     AccountBalance.update_unlocked(result)
                     results.append(result)

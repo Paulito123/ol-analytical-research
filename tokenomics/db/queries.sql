@@ -107,3 +107,15 @@ order by 1
 select account_type, count(*) as cnt
 from accountbalance
 group by account_type
+
+
+select 
+    wallet_type,
+    account_type,
+    sum(unlocked) as unlocked,
+    cast(sum(balance)/1000000 as int) as balance,
+    max(created_at) as created_at,
+    max(updated_at) as updated_at
+from accountbalance
+group by account_type, wallet_type
+limit 100
