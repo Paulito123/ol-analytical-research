@@ -25,6 +25,19 @@ UNION
 select 'TOTALS', '=>', sum(balance), sum(unlocked) from base order by 3
 
 
+-- EXPORT CSV
+select 
+    address, account_type, wallet_type, account_type,
+    balance/1000000 as balance,
+    unlocked,
+    case 
+        when balance > unlocked then unlocked else balance/1000000
+        else balance/1000000
+    end as unlocked_liquidity
+from accountbalance
+order by balance desc
+
+
 select account_type, sum(balance) as balance
 from accountbalance
 group by account_type
@@ -119,3 +132,39 @@ select
 from accountbalance
 group by account_type, wallet_type
 limit 100
+
+
+
+
+-- 
+select account_type, count(*)
+from accountbalance
+group by account_type
+
+select account_type, address
+from accountbalance
+limit 1
+
+select count(*)
+from permissiontree
+
+
+select ab.address, ab.account_type, pt.ptree
+from accountbalance ab 
+    left join permissiontree pt on ab.address = pt.address
+
+with pt as (
+    select count(*) cnt
+    from permissiontree
+)
+, ab as (
+    select count(*) cnt
+    from accountbalance
+)
+select max(pt.cnt) || ' / ' || max(ab.cnt)
+from ab cross join pt
+
+
+update permissiontree 
+    set ptree = null
+where ptree  = '"Not Found"'

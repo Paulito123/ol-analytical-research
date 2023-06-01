@@ -1,6 +1,6 @@
 import os
 import re
-from sqlalchemy import Column, DateTime, Integer, String, func, Float, BigInteger, or_, LargeBinary
+from sqlalchemy import Column, DateTime, Integer, String, func, Float, BigInteger, or_, LargeBinary, text
 from sqlalchemy.sql.expression import label, cast
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import JSONB
@@ -14,6 +14,37 @@ from . import engine, session
 Base = declarative_base()
 
 
+class PermissionTree(Base):
+    __tablename__ = "permissiontree"
+
+    id = Column(Integer, primary_key=True)
+    address = Column(String(36), nullable=False, unique=True)
+    ptree = Column(JSONB)
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    def update_ptree(address: AnyStr, obj: Dict) -> None:
+        """
+        Update permission tree
+        """
+        pt = session\
+            .query(PermissionTree)\
+            .filter(PermissionTree.address == address)\
+            .first()
+        
+        if pt:
+            pt.ptree = obj
+            session.merge(pt)
+            
+        else:
+            pt = PermissionTree(
+                address=address,
+                ptree=obj,
+            )
+            session.add(pt)
+        
+        session.commit()
+
 class AccountBalance(Base):
     __tablename__ = "accountbalance"
 
@@ -25,6 +56,12 @@ class AccountBalance(Base):
     wallet_type = Column(String(1), nullable=False, default='X')
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    def get_all_accounts_with_type() -> List:
+        return session.query(
+            AccountBalance.address,
+            AccountBalance.account_type)\
+                .all()
 
     def lookup_wallet_type(address: AnyStr) -> AnyStr:
         """
